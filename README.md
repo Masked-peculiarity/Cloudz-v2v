@@ -1,6 +1,6 @@
-# Cloudz-v2v — Premium Safety Navigation & Emergency Response Web Application
+#SafeSphere — Premium Safety Navigation & Emergency Response Web Application
 
-Cloudz-v2v is an intelligent, AI-powered women's safety platform combining safe navigation, a RAG-powered safety assistant ("Sahara"), smart incident reporting, and emergency SOS response. Both the web client and backend API are fully built in **TypeScript** for robust compile-time safety.
+SafeSphere is an intelligent, AI-powered women's safety platform combining safe navigation, a RAG-powered safety assistant ("Sahara"), smart incident reporting, and emergency SOS response. Both the web client and backend API are fully built in **TypeScript** for robust compile-time safety.
 
 ---
 
