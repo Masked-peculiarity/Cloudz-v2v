@@ -455,35 +455,43 @@ export default function SafetyMap() {
           />
         </div>
 
-        <div className="mb-3 flex gap-2">
+        <div className="grid grid-cols-3 gap-2 mb-3">
           <button
             type="button"
             onClick={() => setClickMode(clickMode === "start" ? "off" : "start")}
-            className={`flex-1 rounded-lg border px-3 py-2 text-xs font-semibold transition ${
-              clickMode === "start" ? "border-teal-500 bg-teal-500/20 text-teal-300" : "border-white/10 bg-slate-900 text-slate-300 hover:border-white/20"
+            className={`flex flex-col items-center justify-center gap-1.5 rounded-xl border p-2.5 text-xs font-semibold transition ${
+              clickMode === "start" 
+                ? "border-teal-500 bg-teal-500/20 text-teal-300 shadow-[0_0_15px_rgba(45,212,191,0.15)]" 
+                : "border-white/5 bg-slate-900/60 text-slate-300 hover:border-white/20 hover:bg-slate-900"
             }`}
           >
-            {clickMode === "start" ? "Tap map…" : "Set start on map"}
+            <span className="text-lg">📍</span>
+            <span>{clickMode === "start" ? "Tap Map…" : "Set Start"}</span>
           </button>
+
           <button
             type="button"
             onClick={() => setClickMode(clickMode === "end" ? "off" : "end")}
-            className={`flex-1 rounded-lg border px-3 py-2 text-xs font-semibold transition ${
-              clickMode === "end" ? "border-rose-500 bg-rose-500/20 text-rose-300" : "border-white/10 bg-slate-900 text-slate-300 hover:border-white/20"
+            className={`flex flex-col items-center justify-center gap-1.5 rounded-xl border p-2.5 text-xs font-semibold transition ${
+              clickMode === "end" 
+                ? "border-rose-500 bg-rose-500/20 text-rose-300 shadow-[0_0_15px_rgba(251,113,133,0.15)]" 
+                : "border-white/5 bg-slate-900/60 text-slate-300 hover:border-white/20 hover:bg-slate-900"
             }`}
           >
-            {clickMode === "end" ? "Tap map…" : "Set end on map"}
+            <span className="text-lg">🏁</span>
+            <span>{clickMode === "end" ? "Tap Map…" : "Set End"}</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={handleRoute}
+            disabled={loading}
+            className="flex flex-col items-center justify-center gap-1.5 rounded-xl bg-teal-600 text-white p-2.5 text-xs font-bold transition hover:bg-teal-500 disabled:cursor-not-allowed disabled:opacity-50 shadow-[0_4px_12px_rgba(13,148,136,0.3)]"
+          >
+            <span className="text-lg">🧭</span>
+            <span>{loading ? "Routing…" : "Get Route"}</span>
           </button>
         </div>
-
-        <button
-          type="button"
-          onClick={handleRoute}
-          disabled={loading}
-          className="w-full rounded-lg bg-teal-600 py-2.5 text-sm font-semibold text-white transition hover:bg-teal-500 disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          {loading ? "Finding routes…" : "Get route"}
-        </button>
 
         {routes.length > 0 && (
           <div className="mt-3 flex gap-2">
