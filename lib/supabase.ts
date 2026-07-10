@@ -71,3 +71,7 @@ export function createServiceClient() {
     },
   });
 }
+/** True when the server has what it needs to talk to Supabase. */
+export const isSupabaseConfigured = Boolean(
+  process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY
+);

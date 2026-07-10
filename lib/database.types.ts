@@ -55,22 +55,37 @@ export interface Database {
         Row: {
           id: string;
           location: unknown;
-          type: string;
-          note: string | null;
+          raw_text: string;
+          category: string;
+          severity: number;
+          confidence_score: number;
+          status: string;
+          anonymous: boolean;
+          user_id: string | null;
           created_at: string;
         };
         Insert: {
           id?: string;
           location: unknown;
-          type: string;
-          note?: string | null;
+          raw_text: string;
+          category: string;
+          severity: number;
+          confidence_score?: number;
+          status?: string;
+          anonymous?: boolean;
+          user_id?: string | null;
           created_at?: string;
         };
         Update: {
           id?: string;
           location?: unknown;
-          type?: string;
-          note?: string | null;
+          raw_text?: string;
+          category?: string;
+          severity?: number;
+          confidence_score?: number;
+          status?: string;
+          anonymous?: boolean;
+          user_id?: string | null;
           created_at?: string;
         };
         Relationships: [];
@@ -161,8 +176,11 @@ export interface Database {
         Args: {
           p_lat: number;
           p_lng: number;
-          p_type: string;
-          p_note?: string | null;
+          p_category: string;
+          p_raw_text: string;
+          p_severity: number;
+          p_confidence_score?: number;
+          p_anonymous?: boolean;
         };
         Returns: string;
       };
@@ -173,6 +191,16 @@ export interface Database {
           p_tag: string;
         };
         Returns: string;
+      };
+      get_vibe_tags: {
+        Args: Record<string, never>;
+        Returns: {
+          id: string;
+          tag: string;
+          lat: number;
+          lng: number;
+          created_at: string;
+        }[];
       };
     };
     Enums: Record<string, never>;
