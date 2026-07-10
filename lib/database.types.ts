@@ -187,6 +187,22 @@ export interface Database {
         };
         Returns: string;
       };
+      get_incident_reports: {
+        Args: {
+          p_status: string;
+        };
+        Returns: {
+          id: string;
+          lat: number;
+          lng: number;
+          category: string;
+          raw_text: string;
+          severity: number;
+          confidence_score: number;
+          status: string;
+          created_at: string;
+        }[];
+      };
       create_vibe_tag: {
         Args: {
           p_lat: number;
