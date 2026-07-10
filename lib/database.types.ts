@@ -184,40 +184,21 @@ export interface Database {
         };
         Returns: string;
       };
-      create_incident_report_v2: {
-        Args: {
-          p_lat: number;
-          p_lng: number;
-          p_category: string;
-          p_raw_text: string;
-          p_severity: number;
-          p_confidence_score?: number;
-          p_anonymous?: boolean;
-        };
-        Returns: string;
-      };
       get_incident_reports: {
         Args: {
-          p_status?: string | null;
+          p_status: string;
         };
         Returns: {
           id: string;
-          raw_text: string;
-          category: string;
-          severity: number;
-          confidence_score: number;
           lat: number;
           lng: number;
+          category: string;
+          raw_text: string;
+          severity: number;
+          confidence_score: number;
           status: string;
           created_at: string;
         }[];
-      };
-      moderate_incident_report: {
-        Args: {
-          p_id: string;
-          p_status: string;
-        };
-        Returns: undefined;
       };
       create_vibe_tag: {
         Args: {
