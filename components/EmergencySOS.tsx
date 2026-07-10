@@ -65,6 +65,21 @@ export default function EmergencySOS({ activeSosState, setActiveSosState, truste
     }
   };
 
+  // Fix 1a: Handle Main Countdown Completion cleanly outside of render/state updates
+  useEffect(() => {
+    if (activeSosState === "counting" && countdown === 0) {
+      triggerSOSEngine();
+    }
+  }, [countdown, activeSosState]);
+
+  // Fix 1b: Handle Anomaly Countdown Completion cleanly outside of render/state updates
+  useEffect(() => {
+    if (anomalyCheckIn && checkInCountdown === 0) {
+      setAnomalyCheckIn(false);
+      triggerSOSEngine();
+    }
+  }, [checkInCountdown, anomalyCheckIn]);
+
   useEffect(() => {
     if (activeSosState === "active" && !stream) {
       startCamera();
@@ -105,12 +120,12 @@ export default function EmergencySOS({ activeSosState, setActiveSosState, truste
     setCountdown(5);
     playSiren();
     
+    if (countdownIntervalRef.current) clearInterval(countdownIntervalRef.current);
     countdownIntervalRef.current = setInterval(() => {
       playSiren();
       setCountdown((prev) => {
         if (prev <= 1) {
           if (countdownIntervalRef.current) clearInterval(countdownIntervalRef.current);
-          triggerSOSEngine();
           return 0;
         }
         return prev - 1;
@@ -143,13 +158,14 @@ export default function EmergencySOS({ activeSosState, setActiveSosState, truste
     }
 
     try {
+      // Fix 2: Changed userId to null to comply with Backend UUID parsing expectations
       const res = await fetch("/api/sos", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           lat: coords.lat,
           lng: coords.lng,
-          userId: "demo-web-user"
+          userId: null 
         })
       });
 
@@ -234,7 +250,7 @@ export default function EmergencySOS({ activeSosState, setActiveSosState, truste
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            userId: "demo-web-user",
+            userId: null, // Unified alignment with null UUID logic
             route: { origin: [4.47917, 51.9225], destination: [4.4860, 51.9160] }
           })
         });
@@ -278,8 +294,6 @@ export default function EmergencySOS({ activeSosState, setActiveSosState, truste
       setCheckInCountdown((prev) => {
         if (prev <= 1) {
           if (checkInIntervalRef.current) clearInterval(checkInIntervalRef.current);
-          setAnomalyCheckIn(false);
-          triggerSOSEngine();
           return 0;
         }
         return prev - 1;
